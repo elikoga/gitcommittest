@@ -28,6 +28,45 @@
   </dependencies>
 
   <build>
+    <plugins>
+
+        <plugin>
+            <groupId>pl.project13.maven</groupId>
+            <artifactId>git-commit-id-plugin</artifactId>
+            <version>4.0.0</version>
+            <executions>
+                <execution>
+                    <id>get-the-git-infos</id>
+                    <goals>
+                        <goal>revision</goal>
+                    </goals>
+                    <phase>initialize</phase>
+                </execution>
+            </executions>
+            <configuration>
+                <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+            </configuration>
+        </plugin>
+
+            <plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <version>1.8</version>
+  <executions>
+    <execution>
+      <phase>package</phase>
+      <configuration>
+        <target>
+          <echo>Git-Infos: ${git.commit.id}</echo>
+        </target>
+      </configuration>
+      <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+    </plugins>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
@@ -68,24 +107,6 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
-        </plugin>
-        <plugin>
-            <groupId>pl.project13.maven</groupId>
-            <artifactId>git-commit-id-plugin</artifactId>
-            <version>4.0.0</version>
-            <executions>
-                <execution>
-                    <id>get-the-git-infos</id>
-                    <goals>
-                        <goal>revision</goal>
-                    </goals>
-                    <phase>initialize</phase>
-                </execution>
-            </executions>
-            <configuration>
-                <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-            </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
