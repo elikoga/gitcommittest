@@ -12,6 +12,9 @@
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
+
+
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -22,7 +25,43 @@
   </dependencies>
 
   <build>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+
+
     <plugins>
+        <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>templating-maven-plugin</artifactId>
+        <version>1.0.0</version>
+        <executions>
+          <execution>
+            <id>filter-src</id>
+            <goals>
+              <goal>filter-sources</goal>
+            </goals>
+                <configuration>
+                  <!--
+                    Note the two following parameters are the default one.
+                    These are specified here just as a reminder.
+                    But as the Maven philosophy is strongly about conventions,
+                    it's better to just not specify them.
+                  -->
+                  <sourceDirectory>${basedir}/src/main/java-templates</sourceDirectory>
+                  <outputDirectory>${project.build.directory}/generated-sources/java-templates</outputDirectory>
+                </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
         <plugin>
             <groupId>pl.project13.maven</groupId>
@@ -38,7 +77,7 @@
                 </execution>
             </executions>
             <configuration>
-                <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                <generateGitPropertiesFile>false</generateGitPropertiesFile>
                 <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
             </configuration>
         </plugin>
