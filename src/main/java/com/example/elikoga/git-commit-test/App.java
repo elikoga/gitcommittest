@@ -12,7 +12,8 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println(C.commitID);
+        System.out.println("Commit:" + CompileTimeProperties.commitIDAbbrev);
+        System.out.println("Closest Tag:" + CompileTimeProperties.closestTag);
     }
 
 }
